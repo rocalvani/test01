@@ -1,28 +1,60 @@
 {
-  "name": "plantilladocumentacion",
+  "name": "aaaa",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "type": "module",
   "scripts": {
+    "test": "mocha test/supertest.test.js",
     "start": "node src/app.js",
-    "dev": "nodemon src/app.js",
-    "test": "mocha test/supertest.test.js"
+    "dev": "nodemon src/app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rocalvani/DESAF-O01.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rocalvani/DESAF-O01/issues"
+  },
+  "homepage": "https://github.com/rocalvani/DESAF-O01#readme",
+  "description": "",
   "dependencies": {
+    "@faker-js/faker": "^8.0.2",
     "bcrypt": "^5.1.0",
+    "commander": "^10.0.1",
+    "connect-mongo": "^5.0.0",
     "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
     "express": "^4.18.2",
-    "jsonwebtoken": "^8.5.1",
-    "mongoose": "^6.7.5",
+    "express-compression": "^1.0.2",
+    "express-handlebars": "^7.0.2",
+    "express-session": "^1.17.3",
+    "jsonwebtoken": "^9.0.0",
+    "method-override": "^3.0.0",
+    "mongoose": "^7.0.3",
+    "mongoose-paginate-v2": "^1.7.1",
     "multer": "^1.4.5-lts.1",
-    "supertest": "^6.3.3"
+    "nodemailer": "^6.9.3",
+    "passport": "^0.6.0",
+    "passport-github2": "^0.1.12",
+    "passport-jwt": "^4.0.1",
+    "passport-local": "^1.0.0",
+    "session-file-store": "^1.5.0",
+    "socket.io": "^4.6.1",
+    "stripe": "^13.2.0",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.0",
+    "twilio": "^4.11.2",
+    "uuid": "^9.0.0",
+    "webpack-dev-middleware": "^6.1.1",
+    "winston": "^3.9.0"
   },
   "devDependencies": {
     "chai": "^4.3.7",
-    "mocha": "^10.1.0"
+    "mocha": "^10.2.0",
+    "supertest": "^6.3.3"
   }
 }
