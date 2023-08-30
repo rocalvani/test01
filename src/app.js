@@ -8,13 +8,24 @@ import session from 'express-session'
 
 
 
-import usersRouter from './routes/users.router.js';
-import petsRouter from './routes/pets.router.js';
-import adoptionsRouter from './routes/adoption.router.js';
-import sessionsRouter from './routes/sessions.router.js';
+// import usersRouter from './routes/users.router.js';
+// import petsRouter from './routes/pets.router.js';
+// import adoptionsRouter from './routes/adoption.router.js';
+// import sessionsRouter from './routes/sessions.router.js';
 
+import viewRouter from "./routes/views.routes.js"
 import productsRouter from "./routes/products.routes.js"
+import cartsRouter from "./routes/cart.routes.js"
+import usersRouter from "./routes/user.routes.js"
+import usersViewRouter from './routes/users.views.router.js';
+import sessionsRouter from "./routes/sessions.routes.js"
+import githubLoginRouter from "./routes/githubLogin.views.router.js"
+import jwtRouter from './routes/jwt.router.js'
 import productsViewsRouter from './routes/products.views.router.js'
+import cartViewsRouter from './routes/cart.views.router.js'
+import commmentRouter from './routes/comment.routes.js'
+import wishlistRouter from './routes/wishlist.routes.js'
+import paymentRouter from './routes/payments.routes.js'
 
 
 const app = express();
@@ -42,11 +53,26 @@ app.use(passport.session())
 // COOKIE PARSER
 app.use(cookieParser('jwtCookieToken'))
 
-app.use('/api/users',usersRouter);
-app.use('/api/pets',petsRouter);
-app.use('/api/adoptions',adoptionsRouter);
-app.use('/api/sessions',sessionsRouter);
+// app.use('/api/users',usersRouter);
+// // app.use('/api/pets',petsRouter);
+// app.use('/api/adoptions',adoptionsRouter);
+// app.use('/api/sessions',sessionsRouter);
+
+// ROUTER
 app.use('/api/products', productsRouter)
+app.use('/api/carts', cartsRouter)
+app.use('/api/users', usersRouter)
+app.use('/api/sessions',sessionsRouter);
+app.use('/github', githubLoginRouter);
+app.use("/api/jwt", jwtRouter);
+app.use("/api/comment", commmentRouter)
+app.use("/api/wishlist", wishlistRouter)
+app.use('/api/payments', paymentRouter)
+
+// ROUTER VIEWS
+app.use('/', viewRouter)
+app.use('/users',usersViewRouter);
 app.use("/shop", productsViewsRouter)
+app.use("/checkout", cartViewsRouter)
 
 app.listen(PORT,()=>console.log(`Listening on ${PORT}`))
