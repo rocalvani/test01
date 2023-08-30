@@ -3,7 +3,7 @@ import { productModel } from "../dao/managers/db/models/products.js";
 import { productServices, userServices } from "../dao/repository/index.js";
 import { generateOwnerError, generateProductErrorInfo } from "../errors/messages/productCreationErrorInfo.message.js";
 import EErrors from "../errors/enums.js";
-import CustomError from "../errors/CustomError.js";
+// import CustomError from "../errors/CustomError.js";
 import { generateServerError } from "../errors/messages/serverError.message.js";
 import f from "session-file-store";
 import { mailOptions, transporter } from "../mailing.js";
@@ -127,12 +127,12 @@ export const getProduct = async (req, res) => {
     if (!product) {
       req.logger.warning(`Product search failed @ ${req.method} ${req.url}`);
 
-      CustomError.createError({
-        name: "product search error",
-        cause: generateProductErrorInfo(),
-        message: "This product couldn't be found",
-        code: EErrors.NOT_FOUND,
-      });
+      // CustomError.createError({
+      //   name: "product search error",
+      //   cause: generateProductErrorInfo(),
+      //   message: "This product couldn't be found",
+      //   code: EErrors.NOT_FOUND,
+      // });
     }
     res.status(201).send(product);
   } catch (error) {
@@ -161,12 +161,12 @@ export const createProduct = async (req, res) => {
         `Product creation failed @ ${req.method} ${req.url} due to missing information`
       );
 
-      CustomError.createError({
-        name: "Product creation error",
-        cause: generateProductErrorInfo(),
-        message: "Product could not be created.",
-        code: EErrors.INVALID_TYPES_ERROR,
-      });
+      // CustomError.createError({
+      //   name: "Product creation error",
+      //   cause: generateProductErrorInfo(),
+      //   message: "Product could not be created.",
+      //   code: EErrors.INVALID_TYPES_ERROR,
+      // });
     }
 
     const codeProduct = await productServices.findBy({code: code})
@@ -176,12 +176,12 @@ export const createProduct = async (req, res) => {
         `Product creation failed @ ${req.method} ${req.url} due to duplicate code.`
       );
 
-      CustomError.createError({
-        name: "user creation error",
-        cause: generateProductErrorInfo(req.user),
-        message: "User could not be created.",
-        code: EErrors.INVALID_TYPES_ERROR,
-      });
+      // CustomError.createError({
+      //   name: "user creation error",
+      //   cause: generateProductErrorInfo(req.user),
+      //   message: "User could not be created.",
+      //   code: EErrors.INVALID_TYPES_ERROR,
+      // });
 
     }
 
@@ -276,12 +276,13 @@ export const updateProduct = async (req, res) => {
     if (!result) {
       req.logger.warning(`Product search failed @ ${req.method} ${req.url}`);
 
-      CustomError.createError({
-        name: "product search error",
-        cause: generateProductErrorInfo(),
-        message: "This product couldn't be found",
-        code: EErrors.NOT_FOUND,
-      });    }
+      // CustomError.createError({
+      //   name: "product search error",
+      //   cause: generateProductErrorInfo(),
+      //   message: "This product couldn't be found",
+      //   code: EErrors.NOT_FOUND,
+      // }); 
+       }
     res.status(201).send({status: "success", message: "Product has successfully been created."});
   } catch (error) {
     req.logger.fatal(`Server error @ ${req.method}${req.url} with message: ${error.message}`);
@@ -300,12 +301,12 @@ export const deleteProduct = async (req, res) => {
     if (!product) {
       req.logger.warning(`Product deletion failed @ ${req.method} ${req.url}`);
 
-      CustomError.createError({
-        name: "product search error",
-        cause: generateProductErrorInfo(),
-        message: "This product couldn't be found",
-        code: EErrors.NOT_FOUND,
-      });
+      // CustomError.createError({
+      //   name: "product search error",
+      //   cause: generateProductErrorInfo(),
+      //   message: "This product couldn't be found",
+      //   code: EErrors.NOT_FOUND,
+      // });
     }
 
     if (req.user.role == "admin") {
@@ -363,12 +364,12 @@ export const deleteProduct = async (req, res) => {
         if (error) {
           req.logger.fatal(`Server error @ ${req.method} ${req.url}`);
 
-          CustomError.createError({
-            name: "Server error",
-            cause: generateServerError(),
-            message: "Something went wrong on server end.",
-            code: EErrors.DATABASE_ERROR,
-          });
+          // CustomError.createError({
+          //   name: "Server error",
+          //   cause: generateServerError(),
+          //   message: "Something went wrong on server end.",
+          //   code: EErrors.DATABASE_ERROR,
+          // });
         }
       });
 
@@ -381,12 +382,12 @@ export const deleteProduct = async (req, res) => {
       if (product.owner.email != req.user.email) {
         req.logger.warning(`Product search failed @ ${req.method} ${req.url}`);
 
-        CustomError.createError({
-          name: "product search error",
-          cause: generateOwnerError(),
-          message: "This product couldn't be found",
-          code: EErrors.NOT_FOUND,
-        });
+        // CustomError.createError({
+        //   name: "product search error",
+        //   cause: generateOwnerError(),
+        //   message: "This product couldn't be found",
+        //   code: EErrors.NOT_FOUND,
+        // });
       } else {
         await productServices.delete(result);
         res.status(201).send({
