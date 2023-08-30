@@ -10,7 +10,7 @@ import { deny, passportCall } from ".././utils.js";
 
 const router = Router();
 
-router.get("/", passportCall("jwt"), paginateProducts);
+router.get("/",  passportCall("jwt"),paginateProducts);
 router.get("/tag/:tag", getProductsByTag)
 router.get("/react", getProducts);
 router.get("/:pid", getProduct);

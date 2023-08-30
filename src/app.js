@@ -3,6 +3,10 @@ import mongoose from 'mongoose';
 import cookieParser from 'cookie-parser';
 import passport from "passport";
 import initializePassport from "./config/passport.config.js";
+import MongoStore from "connect-mongo";
+import session from 'express-session'
+
+
 
 import usersRouter from './routes/users.router.js';
 import petsRouter from './routes/pets.router.js';
@@ -14,10 +18,21 @@ import productsViewsRouter from './routes/products.views.router.js'
 
 
 const app = express();
-const PORT = process.env.PORT||9090;
-const connection = mongoose.connect(process.env.MONGO_URL)
-
+const PORT = 9090;
+// process.env.PORT||
+// const connection = mongoose.connect('mongodb+srv://admin:rocio1@cluster0.facejpa.mongodb.net/Ecommerce')
+// process.env.MONGO_URL
 app.use(express.json());
+app.use(session({
+    store: MongoStore.create({
+      mongoUrl: 'mongodb+srv://admin:rocio1@cluster0.facejpa.mongodb.net/Ecommerce',
+      mongoOptions: {useNewUrlParser: true, useUnifiedTopology: true},
+      ttl: 60
+    }),
+    secret: "secret",
+    resave: false,
+    saveUninitialized: true
+  }))
 
 // PASSPORT 
 initializePassport()
