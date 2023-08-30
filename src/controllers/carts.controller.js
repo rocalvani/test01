@@ -3,7 +3,7 @@ import config from "../config/config.js";
 import { v4 as uuidv4 } from 'uuid';
 import { ticketService} from "../dao/managers/factory.js";
 import { cartServices, productServices } from "../dao/repository/index.js";
-import CustomError from "../errors/CustomError.js";
+// import CustomError from "../errors/CustomError.js";
 import { productService } from "../dao/managers/factory.js";
 import EErrors from "../errors/enums.js";
 import { generateServerError } from "../errors/messages/serverError.message.js";
@@ -23,12 +23,12 @@ export const getCart = async (req, res) => {
       } else {
         req.logger.warning(`cart search failed @ ${req.method} ${req.url}`);
 
-      CustomError.createError({
-        name: "cart search error",
-        cause: generateCartError(),
-        message: "This cart couldn't be found",
-        code: EErrors.NOT_FOUND,
-      });
+      // CustomError.createError({
+      //   name: "cart search error",
+      //   cause: generateCartError(),
+      //   message: "This cart couldn't be found",
+      //   code: EErrors.NOT_FOUND,
+      // });
       }
   } catch (error) {
 
@@ -58,12 +58,12 @@ export const addProductToCart = async (req, res) => {
     } else {
       req.logger.warning(`cart search failed @ ${req.method} ${req.url}`);
 
-      CustomError.createError({
-        name: "Product to cart error",
-        cause: generateOwnerError(),
-        message: "This product cannot be added to the cart.",
-        code: EErrors.INVALID_TYPES_ERROR,
-      });
+      // CustomError.createError({
+      //   name: "Product to cart error",
+      //   cause: generateOwnerError(),
+      //   message: "This product cannot be added to the cart.",
+      //   code: EErrors.INVALID_TYPES_ERROR,
+      // });
     }
 
 
@@ -113,12 +113,12 @@ export const addMoreOf = async (req, res) => {
     } else {
       req.logger.warning(`cart search failed @ ${req.method} ${req.url}`);
 
-      CustomError.createError({
-        name: "Product in cart search error",
-        cause: generateCartError(),
-        message: "This product couldn't be found within the cart",
-        code: EErrors.NOT_FOUND,
-      });
+      // CustomError.createError({
+      //   name: "Product in cart search error",
+      //   cause: generateCartError(),
+      //   message: "This product couldn't be found within the cart",
+      //   code: EErrors.NOT_FOUND,
+      // });
     }
     
   } catch(error) {
@@ -269,12 +269,12 @@ let result = transporter.sendMail(mailOptions, (error, info) => {
   if (error) {
     req.logger.fatal(`Server error @ ${req.method} ${req.url}` )
     
-    CustomError.createError({
-      name: "Server error",
-      cause: generateServerError(),
-      message: "Something went wrong on server end.",
-      code: EErrors.DATABASE_ERROR
-    })
+    // CustomError.createError({
+    //   name: "Server error",
+    //   cause: generateServerError(),
+    //   message: "Something went wrong on server end.",
+    //   code: EErrors.DATABASE_ERROR
+    // })
   }
   res.status(201).send({status: "success", options:mailOptions });
 });

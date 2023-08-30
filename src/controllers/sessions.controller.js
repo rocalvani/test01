@@ -5,7 +5,7 @@ import { cartService } from "../dao/managers/factory.js";
 import { createHash } from ".././utils.js";
 import UserDTO from "../dao/dto/user.dto.js";
 import { userServices } from "../dao/repository/index.js";
-import CustomError from "../errors/CustomError.js";
+// import CustomError from "../errors/CustomError.js";
 import {
   generateDuplicateErrorInfo,
   generateLogInErrorInfo,
@@ -23,12 +23,12 @@ export const logIn = async (req, res) => {
     if (!user) {
       req.logger.warning(`User search failed @ ${req.method} ${req.url}`);
 
-      CustomError.createError({
-        name: "user logging error",
-        cause: generateLogInErrorInfo(),
-        message: "User does not exist.",
-        code: EErrors.NOT_FOUND,
-      });
+      // CustomError.createError({
+      //   name: "user logging error",
+      //   cause: generateLogInErrorInfo(),
+      //   message: "User does not exist.",
+      //   code: EErrors.NOT_FOUND,
+      // });
 
     }
     if (!validPass(user, password)) {
@@ -36,12 +36,12 @@ export const logIn = async (req, res) => {
         `User credentials were incorrect @ ${req.method} ${req.url}`
       );
     
-      CustomError.createError({
-        name: "user logging error",
-        cause: generateUserErrorInfo(),
-        message: "Credentials are incorrect.",
-        code: EErrors.INVALID_TYPES_ERROR,
-      });
+      // CustomError.createError({
+      //   name: "user logging error",
+      //   cause: generateUserErrorInfo(),
+      //   message: "Credentials are incorrect.",
+      //   code: EErrors.INVALID_TYPES_ERROR,
+      // });
       }
 
     // UPDATE DE LAST CONNECTION //
@@ -94,24 +94,24 @@ export const signUp = async (req, res) => {
       `User credentials were insufficient @ ${req.method} ${req.url}`
     );
 
-    CustomError.createError({
-      name: "User Creation Error",
-      cause: generateUserErrorInfo({ first_name, last_name, age, email }),
-      message: "There was an error during user creation.",
-      code: EErrors.INVALID_TYPES_ERROR
-  });
+  //   CustomError.createError({
+  //     name: "User Creation Error",
+  //     cause: generateUserErrorInfo({ first_name, last_name, age, email }),
+  //     message: "There was an error during user creation.",
+  //     code: EErrors.INVALID_TYPES_ERROR
+  // });
   }
 
   const exists = await userServices.find(email);
   if (exists) {
     req.logger.warning(`user already exists @ ${req.method} ${req.url}`);
 
-    CustomError.createError({
-      name: "user creation error",
-      cause: generateDuplicateErrorInfo(),
-      message: "User already exists.",
-      code: EErrors.INVALID_TYPES_ERROR,
-    });
+    // CustomError.createError({
+    //   name: "user creation error",
+    //   cause: generateDuplicateErrorInfo(),
+    //   message: "User already exists.",
+    //   code: EErrors.INVALID_TYPES_ERROR,
+    // });
   }
 
   if (pfp) {

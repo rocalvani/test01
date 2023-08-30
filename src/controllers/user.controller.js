@@ -6,7 +6,7 @@ import config from "../config/config.js";
 import nodemailer from "nodemailer";
 import { ticketService } from "../dao/managers/factory.js";
 import { generateUserErrorInfo } from "../errors/messages/userCreationError.message.js";
-import CustomError from "../errors/CustomError.js";
+// import CustomError from "../errors/CustomError.js";
 import EErrors from "../errors/enums.js";
 
 
@@ -99,12 +99,12 @@ export const deleteInactive = async (req, res) => {
             if (error) {
               req.logger.fatal(`Server error @ ${req.method} ${req.url}`);
         
-              CustomError.createError({
-                name: "Server error",
-                cause: generateServerError(),
-                message: "Something went wrong on server end.",
-                code: EErrors.DATABASE_ERROR,
-              });
+              // CustomError.createError({
+              //   name: "Server error",
+              //   cause: generateServerError(),
+              //   message: "Something went wrong on server end.",
+              //   code: EErrors.DATABASE_ERROR,
+              // });
             }
           });
         await userServices.delete(el._id);
@@ -131,12 +131,12 @@ export const deleteInactive = async (req, res) => {
           `User documents were insufficient @ ${req.method} ${req.url}`
         );
     
-        CustomError.createError({
-          name: "User Creation Error",
-          cause: generateUserErrorInfo(),
-          message: "There was an error during upgrade.",
-          code: EErrors.INVALID_TYPES_ERROR
-      });
+      //   CustomError.createError({
+      //     name: "User Creation Error",
+      //     cause: generateUserErrorInfo(),
+      //     message: "There was an error during upgrade.",
+      //     code: EErrors.INVALID_TYPES_ERROR
+      // });
       } else {
         let id = docs.find((el) => el.document.name.includes("id"));
       let address = docs.find((el) => el.document.name.includes("address"));
@@ -148,12 +148,12 @@ export const deleteInactive = async (req, res) => {
             `User documents were insufficient @ ${req.method} ${req.url}`
           );
       
-          CustomError.createError({
-            name: "User Creation Error",
-            cause: generateUserErrorInfo(),
-            message: "There was an error during user creation.",
-            code: EErrors.INVALID_TYPES_ERROR
-        });
+        //   CustomError.createError({
+        //     name: "User Creation Error",
+        //     cause: generateUserErrorInfo(),
+        //     message: "There was an error during user creation.",
+        //     code: EErrors.INVALID_TYPES_ERROR
+        // });
         } 
       } else {
         await userServices.upgrade(user._id, "user");
@@ -182,12 +182,12 @@ export const deleteInactive = async (req, res) => {
           `User edit fields were insufficient @ ${req.method} ${req.url}`
         );
     
-        CustomError.createError({
-          name: "User edit Error",
-          cause: generateUserErrorInfo(),
-          message: "There was an error during user editing.",
-          code: EErrors.INVALID_TYPES_ERROR
-      });      
+      //   CustomError.createError({
+      //     name: "User edit Error",
+      //     cause: generateUserErrorInfo(),
+      //     message: "There was an error during user editing.",
+      //     code: EErrors.INVALID_TYPES_ERROR
+      // });      
       }
   
       if (pfp) {
@@ -230,23 +230,23 @@ export const deleteInactive = async (req, res) => {
           `Password editing error @ ${req.method} ${req.url} - Password is the same as the old one.`
         );
     
-        CustomError.createError({
-          name: "User editing Error",
-          cause: generateUserErrorInfo(),
-          message: "There was an error during user editing.",
-          code: EErrors.INVALID_TYPES_ERROR
-      });
+      //   CustomError.createError({
+      //     name: "User editing Error",
+      //     cause: generateUserErrorInfo(),
+      //     message: "There was an error during user editing.",
+      //     code: EErrors.INVALID_TYPES_ERROR
+      // });
       } else if (newPass != passConfirmation) {
             req.logger.warning(
       `Password editing error @ ${req.method} ${req.url} - Passwords do not match`
     );
 
-    CustomError.createError({
-      name: "User editing Error",
-      cause: generateUserErrorInfo(),
-      message: "There was an error during user editing.",
-      code: EErrors.INVALID_TYPES_ERROR
-  });
+  //   CustomError.createError({
+  //     name: "User editing Error",
+  //     cause: generateUserErrorInfo(),
+  //     message: "There was an error during user editing.",
+  //     code: EErrors.INVALID_TYPES_ERROR
+  // });
       } else {
         const password = createHash(newPass); 
         let result = await userServices.updateUser(id, { password: password });
@@ -277,12 +277,13 @@ export const deleteInactive = async (req, res) => {
           `Information was insufficient @ ${req.method} ${req.url}`
         );
     
-        CustomError.createError({
-          name: "User editing Error",
-          cause: generateUserErrorInfo(),
-          message: "There was an error during user editing.",
-          code: EErrors.INVALID_TYPES_ERROR
-      });      }
+      //   CustomError.createError({
+      //     name: "User editing Error",
+      //     cause: generateUserErrorInfo(),
+      //     message: "There was an error during user editing.",
+      //     code: EErrors.INVALID_TYPES_ERROR
+      // });  
+        }
 
       if (id) {
         await userServices.addDocs(uid, {
@@ -417,12 +418,12 @@ export const tokenMailing = async (req, res) => {
         if (error) {
           req.logger.fatal(`Server error @ ${req.method} ${req.url}`);
     
-          CustomError.createError({
-            name: "Server error",
-            cause: generateServerError(),
-            message: "Something went wrong on server end.",
-            code: EErrors.DATABASE_ERROR,
-          });
+          // CustomError.createError({
+          //   name: "Server error",
+          //   cause: generateServerError(),
+          //   message: "Something went wrong on server end.",
+          //   code: EErrors.DATABASE_ERROR,
+          // });
         }
       });
       res.status(201).send({status: "success", message: "Email has been sent to the user."})
@@ -431,12 +432,13 @@ export const tokenMailing = async (req, res) => {
         `User could not be found @ ${req.method} ${req.url}`
       );
   
-      CustomError.createError({
-        name: "User search Error",
-        cause: generateUserErrorInfo(),
-        message: "There was an error during user search.",
-        code: EErrors.NOT_FOUND
-    });    }
+    //   CustomError.createError({
+    //     name: "User search Error",
+    //     cause: generateUserErrorInfo(),
+    //     message: "There was an error during user search.",
+    //     code: EErrors.NOT_FOUND
+    // }); 
+     }
    
      
     } catch (error) {
@@ -456,12 +458,12 @@ export const tokenMailing = async (req, res) => {
           `User editing error @ ${req.method} ${req.url}`
         );
     
-        CustomError.createError({
-          name: "User editing Error",
-          cause: generateUserErrorInfo(),
-          message: "There was an error during user editing.",
-          code: EErrors.INVALID_TYPES_ERROR
-      });
+      //   CustomError.createError({
+      //     name: "User editing Error",
+      //     cause: generateUserErrorInfo(),
+      //     message: "There was an error during user editing.",
+      //     code: EErrors.INVALID_TYPES_ERROR
+      // });
       } else {
         let result= await userServices.updateUser({_id: user._id}, { password: password }); 
         res.status(201).send({status: "success", payload: result})
@@ -497,12 +499,13 @@ export const getWish = async (req,res) => {
         `User editing error @ ${req.method} ${req.url}`
       );
   
-      CustomError.createError({
-        name: "User editing Error",
-        cause: generateUserErrorInfo(),
-        message: "There was an error during user editing.",
-        code: EErrors.INVALID_TYPES_ERROR
-    });   }
+    //   CustomError.createError({
+    //     name: "User editing Error",
+    //     cause: generateUserErrorInfo(),
+    //     message: "There was an error during user editing.",
+    //     code: EErrors.INVALID_TYPES_ERROR
+    // });  
+   }
     } catch (error) {
       req.logger.fatal(`Server error @ ${req.method}${req.url}`);
       res.status(error.code).send({status: "error", message: error.message})
