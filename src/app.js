@@ -8,6 +8,7 @@ import session from 'express-session'
 import { Server, Socket } from "socket.io";
 
 
+import messageService from "./dao/managers/db/services/message.service.js";
 
 
 // import usersRouter from './routes/users.router.js';
@@ -77,8 +78,9 @@ app.use('/users',usersViewRouter);
 app.use("/shop", productsViewsRouter)
 app.use("/checkout", cartViewsRouter)
 
-app.listen(PORT,()=>console.log(`Listening on ${PORT}`))
-
+const httpServer = app.listen(PORT, () => {
+    console.log(`Este server corre mediante: ${PORT} `)
+  });
 
 // SOCKET 
 
