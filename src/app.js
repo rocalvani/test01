@@ -5,6 +5,8 @@ import passport from "passport";
 import initializePassport from "./config/passport.config.js";
 import MongoStore from "connect-mongo";
 import session from 'express-session'
+import { Server, Socket } from "socket.io";
+
 
 
 
@@ -76,3 +78,16 @@ app.use("/shop", productsViewsRouter)
 app.use("/checkout", cartViewsRouter)
 
 app.listen(PORT,()=>console.log(`Listening on ${PORT}`))
+
+
+// SOCKET 
+
+export const socketServer = new Server(httpServer)
+
+socketServer.on('connection', socket => {
+socket.on("message", async data => {
+  let result = await messageService.save(data)
+  let chat = await messageService.getAll()
+  socketServer.emit("messages", chat)
+})
+})
