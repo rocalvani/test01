@@ -18,8 +18,8 @@ import productsViewsRouter from './routes/products.views.router.js'
 
 
 const app = express();
-const PORT = 9090;
-// process.env.PORT||
+const PORT = process.env.PORT||9090;
+// 
 // const connection = mongoose.connect('mongodb+srv://admin:rocio1@cluster0.facejpa.mongodb.net/Ecommerce')
 // process.env.MONGO_URL
 app.use(express.json());
